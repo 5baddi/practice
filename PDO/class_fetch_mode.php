@@ -7,9 +7,14 @@
 
         $query = $pdo->query("SELECT * FROM clients"); // Simple query
         $query->setFetchMode(PDO::FETCH_CLASS, "Client"); // Set query fetch mode to class
+        $result = $query->fetchAll();
 
-        while($res = $query->fetch()){ // Handle returned data
-            print_r($res);
+        if(count($result)){
+            while($res = $result){ // Handle returned data
+                $res->display(); // Class display method
+            }
+        }else{
+            echo "No result !";
         }
     }catch(PDOException $ex){
         // Handle errors
