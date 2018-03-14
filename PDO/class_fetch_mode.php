@@ -9,6 +9,7 @@
         $query->setFetchMode(PDO::FETCH_CLASS, "Client"); // Set query fetch mode to class
         $result = $query->fetchAll();
 
+        // Check if result not empty
         if(count($result)){
             while($res = $result){ // Handle returned data
                 $res->display(); // Class display method
