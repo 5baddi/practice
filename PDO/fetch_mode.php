@@ -1,24 +1,20 @@
 <?php
-    require("Client.php"); // Load Client class
+    require("Client.php");
+
+    $pdo = new PDO("mysql:host=127.0.0.1;dbname=exam", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     try{
-        $pdo = new PDO("mysql:host=127.0.0.1;dbname=exam", "root", ""); // Connect to db with PDO instance
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Set Error mode
+       $query = $pdo->query("SELECT * FROM clients"); // Simple query
 
-        $query = $pdo->query("SELECT * FROM clients"); // Simple query
-        $query->setFetchMode(PDO::FETCH_CLASS, "Client"); // Set query fetch mode to class
-        $result = $query->fetchAll();
-
-        // Check if result not empty
-        if(count($result)){
-            while($res = $result){ // Handle returned data
-                $res->display(); // Class display method
-            }
-        }else{
-            echo "No result !";
-        }
+       // The Three popular fetch mode
+       $result = $query->fetchAll(PDO::FETCH_ASSOC); // Fetch as Associative array
+       $result = $query->fetchAll(PDO::FETCH_NUM); // Fetch as Numeric array
+       $result = $query->fetchAll(PDO::FETCH_CLASS, "Client"); // Fetch as custom Class / Object
+       foreach($result as $r){
+           $r->display(); // Use display method defined in Client class
+       }
     }catch(PDOException $ex){
-        // Handle errors
-        die($ex->getMessage());
+
     }
 ?>
