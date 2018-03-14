@@ -16,6 +16,6 @@
            $r->display(); // Use display method defined in Client class
        }
     }catch(PDOException $ex){
-
+        // Handle exceptions
     }
 ?>
